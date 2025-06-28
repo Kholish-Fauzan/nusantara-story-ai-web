@@ -27,7 +27,7 @@ exports.handler = async function(event, context) {
         const { type, data } = body;
 
         let prompt = "";
-        let generationConfig = {}; 
+        let generationConfig = {}; // Untuk responseMimeType dan schema
 
         if (type === "narration") {
             const { judul, lokasi, deskripsi, target, gaya } = data;
@@ -156,58 +156,21 @@ exports.handler = async function(event, context) {
             };
 
             const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+            const result = await model.generateContent({
+                contents: [{ role: "user", parts: [{ text: prompt }] }],
+                generationConfig: generationConfig
+            });
+            const response = await result.response;
+            const jsonString = response.text();
 
-            try {
-                const result = await model.generateContent({
-                    contents: [{ role: "user", parts: [{ text: prompt }] }],
-                    generationConfig: generationConfig
-                });
-                const response = await result.response;
-                let jsonString = response.text();
+            // Gemini API might return JSON wrapped in markdown, so remove it
+            const cleanedJsonString = jsonString.replace(/```json\n|\n```/g, '').trim();
+            const analysisJson = JSON.parse(cleanedJsonString);
 
-                // *** Peningkatan Pembersihan dan Parsing JSON ***
-                // Hapus pembungkus markdown ```json dan apapun yang non-JSON di awal/akhir
-                const jsonMatch = jsonString.match(/```json\s*([\s\S]*?)\s*```/);
-                if (jsonMatch && jsonMatch[1]) {
-                    jsonString = jsonMatch[1]; // Ambil hanya konten di dalam block code
-                }
-                
-                // Tambahkan penanganan untuk kasus Gemini tidak membungkusnya dalam markdown
-                jsonString = jsonString.trim();
-
-                let analysisJson;
-                try {
-                    analysisJson = JSON.parse(jsonString);
-                } catch (jsonParseError) {
-                    console.error("Failed to parse JSON from Gemini API:", jsonParseError);
-                    console.error("Raw string that failed parsing:", jsonString);
-                    // Jika parsing gagal, kembalikan 500 dengan pesan error yang lebih spesifik
-                    return {
-                        statusCode: 500,
-                        body: JSON.stringify({ 
-                            message: "Failed to parse Gemini API response as JSON.", 
-                            error: jsonParseError.message,
-                            rawResponse: jsonString // Sertakan respons mentah untuk debugging
-                        })
-                    };
-                }
-
-                return {
-                    statusCode: 200,
-                    body: JSON.stringify({ type: "analysis", content: analysisJson })
-                };
-
-            } catch (geminiApiError) {
-                console.error("Error calling Gemini API for analysis:", geminiApiError);
-                // Menangkap error dari API Gemini itu sendiri
-                return {
-                    statusCode: 500,
-                    body: JSON.stringify({ 
-                        message: "Error from Gemini API during analysis generation.", 
-                        error: geminiApiError.message 
-                    })
-                };
-            }
+            return {
+                statusCode: 200,
+                body: JSON.stringify({ type: "analysis", content: analysisJson })
+            };
 
         } else {
             return {
@@ -217,7 +180,7 @@ exports.handler = async function(event, context) {
         }
 
     } catch (error) {
-        console.error("Error in Netlify Function (outer catch):", error);
+        console.error("Error in Netlify Function:", error);
         return {
             statusCode: 500,
             body: JSON.stringify({ message: "Internal Server Error", error: error.message })
