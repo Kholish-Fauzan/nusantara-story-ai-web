@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nusantara Story AI: Tentang Saya</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#1ABC9C', // Teal Green
+                        secondary: '#2C3E50', // Dark Blue Gray
+                        accent: '#FF7043', // Vibrant Orange for CTA
+                        lightgray: '#ECF0F1',
+                        mediumgray: '#BDC3C7',
+                        darkgray: '#777777',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100 font-sans text-secondary min-h-screen flex flex-col">
+
+    <!-- Header & Navigation Bar -->
+    <header class="bg-primary shadow-md p-4 text-white">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold rounded-md px-3 py-1 hover:bg-primary-dark transition duration-300">Nusantara Story AI 🇮🇩</a>
+            <nav>
+                <ul class="flex space-x-6 text-lg font-medium">
+                    <li><a href="index.html" class="hover:text-lightgray transition duration-300">Beranda</a></li>
+                    <li><a href="examples.html" class="hover:text-lightgray transition duration-300">Contoh & Inspirasi</a></li>
+                    <li><a href="guide.html" class="hover:text-lightgray transition duration-300">Tips & Panduan</a></li>
+                    <li><a href="about.html" class="hover:text-lightgray transition duration-300">Tentang Saya</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto flex-grow p-6 md:p-8 lg:p-10">
+        <h1 class="text-5xl font-extrabold text-primary text-center mb-6 leading-tight">Tentang Saya & Kontak 👋</h1>
+        <p class="text-center text-lg mb-10 text-gray-700">Salam kenal! Saya adalah Kholish Fauzan, pengembang di balik Nusantara Story AI.</p>
+        <hr class="border-t-2 border-lightgray my-10">
+
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-secondary mb-6">Perjalanan di Balik Aplikasi Ini 💡</h2>
+            <div class="bg-white rounded-lg p-6 shadow-md border border-gray-200">
+                <p class="text-gray-700 leading-relaxed">
+                    Saya Kholish Fauzan, seorang individu yang memiliki semangat besar untuk teknologi dan kekayaan budaya Indonesia. Aplikasi Nusantara Story AI ini lahir dari keinginan saya untuk menjembatani kemajuan teknologi kecerdasan buatan dengan potensi luar biasa dari warisan budaya dan pariwisata lokal kita.
+                </p>
+                <p class="text-gray-700 leading-relaxed">
+                    Saya percaya bahwa setiap daerah memiliki kisah unik yang layak diceritakan dan potensi ekonomi yang menunggu untuk digali. Dengan AI Gemini, saya berharap aplikasi ini dapat menjadi alat yang memberdayakan masyarakat, penggiat budaya, dan pelaku pariwisata untuk merangkai narasi yang memukau dan strategi promosi yang efektif.
+                </p>
+                <p class="text-gray-700 leading-relaxed">
+                    Semoga aplikasi sederhana ini dapat memberikan manfaat nyata bagi pelestarian budaya dan pengembangan pariwisata di seluruh Nusantara.
+                </p>
+            </div>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-secondary mb-6">Mari Terhubung! 📧</h2>
+            <div class="bg-white rounded-lg p-6 shadow-md border border-gray-200">
+                <p class="text-gray-700 mb-4">Saya sangat antusias untuk mendengar *feedback*, ide, atau pertanyaan dari Anda. Jangan ragu untuk terhubung!</p>
+                <ul class="text-gray-700 space-y-2">
+                    <li><strong>Email:</strong> <a href="mailto:kholishfauzan.personal@gmail.com" class="text-primary hover:underline">kholishfauzan.personal@gmail.com</a> 📧</li>
+                    <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/kholish-fauzan" target="_blank" class="text-primary hover:underline">linkedin.com/in/kholish-fauzan</a> 🔗</li>
+                    <li><strong>GitHub:</strong> <a href="https://github.com/KholishFauzan" target="_blank" class="text-primary hover:underline">github.com/KholishFauzan</a> 💻</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-secondary p-4 text-center text-lightgray text-sm mt-10">
+        &copy; <span id="currentYear"></span> Nusantara Story AI. Dibuat dengan oleh Kholish Fauzan ✨.
+    </footer>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

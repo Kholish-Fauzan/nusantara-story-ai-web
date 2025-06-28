@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nusantara Story AI: Beranda</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#1ABC9C', // Teal Green
+                        secondary: '#2C3E50', // Dark Blue Gray
+                        accent: '#FF7043', // Vibrant Orange for CTA
+                        lightgray: '#ECF0F1',
+                        mediumgray: '#BDC3C7',
+                        darkgray: '#777777',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100 font-sans text-secondary min-h-screen flex flex-col">
+
+    <!-- Header & Navigation Bar -->
+    <header class="bg-primary shadow-md p-4 text-white">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold rounded-md px-3 py-1 hover:bg-primary-dark transition duration-300">Nusantara Story AI 🇮🇩</a>
+            <nav>
+                <ul class="flex space-x-6 text-lg font-medium">
+                    <li><a href="index.html" class="hover:text-lightgray transition duration-300">Beranda</a></li>
+                    <li><a href="examples.html" class="hover:text-lightgray transition duration-300">Contoh & Inspirasi</a></li>
+                    <li><a href="guide.html" class="hover:text-lightgray transition duration-300">Tips & Panduan</a></li>
+                    <li><a href="about.html" class="hover:text-lightgray transition duration-300">Tentang Saya</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto flex-grow p-6 md:p-8 lg:p-10">
+        <h1 class="text-5xl font-extrabold text-primary text-center mb-6 leading-tight">Nusantara Story AI: Menggali Kisah Budaya, Memicu Potensi Wisata 🗺️</h1>
+        <p class="text-center text-lg mb-10 text-gray-700">Jelajahi potensi tak terbatas budaya dan pariwisata lokal Anda. Aplikasi ini dirancang untuk membantu Anda merangkai <span class="font-semibold text-primary">narasi yang memikat</span> dan <span class="font-semibold text-primary">strategi promosi cerdas</span>, didukung oleh kecerdasan buatan <span class="font-semibold text-primary">Gemini-2.5 Flash</span>.</p>
+        <hr class="border-t-2 border-lightgray my-10">
+
+        <!-- Input Section -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-secondary mb-8 text-center">Ceritakan Kekayaan Budaya/Wisata Lokal Anda ✍️</h2>
+            <div class="grid md:grid-cols-2 gap-8 mb-6">
+                <!-- Nama Objek Budaya/Wisata -->
+                <div>
+                    <label for="judul_objek" class="block text-secondary text-lg font-medium mb-2">Nama Objek Budaya/Wisata <span class="text-red-500">*</span></label>
+                    <input type="text" id="judul_objek" placeholder="Contoh: Kopi Gayo, Tari Saman, Candi Prambanan"
+                           class="w-full p-3 border border-mediumgray rounded-lg focus:ring-primary focus:border-primary transition duration-200 shadow-sm">
+                    <p class="text-sm text-darkgray mt-2">Nama spesifik objek yang ingin Anda ceritakan atau promosikan.</p>
+                </div>
+
+                <!-- Pilih Gaya Bahasa Narasi -->
+                <div>
+                    <label for="gaya_bahasa" class="block text-secondary text-lg font-medium mb-2">Pilih Gaya Bahasa Narasi (Opsional)</label>
+                    <select id="gaya_bahasa" class="w-full p-3 border border-mediumgray rounded-lg focus:ring-primary focus:border-primary transition duration-200 shadow-sm bg-white">
+                        <option value="Pilih Gaya">Pilih Gaya</option>
+                        <option value="Edukasi">Edukasi</option>
+                        <option value="Promosi">Promosi</option>
+                        <option value="Cerita Rakyat">Cerita Rakyat</option>
+                        <option value="Puitis">Puitis</option>
+                        <option value="Informatif">Informatif</option>
+                        <option value="Inspiratif">Inspiratif</option>
+                    </select>
+                    <p class="text-sm text-darkgray mt-2">Pilih nuansa dan gaya penulisan yang Anda inginkan untuk narasi.</p>
+                </div>
+
+                <!-- Lokasi Obyek -->
+                <div>
+                    <label for="lokasi_objek" class="block text-secondary text-lg font-medium mb-2">Lokasi Obyek (Kota/Kabupaten/Provinsi) <span class="text-red-500">*</span></label>
+                    <input type="text" id="lokasi_objek" placeholder="Contoh: Aceh Tengah, Sumatra Utara, Bondowoso"
+                           class="w-full p-3 border border-mediumgray rounded-lg focus:ring-primary focus:border-primary transition duration-200 shadow-sm">
+                    <p class="text-sm text-darkgray mt-2">Lokasi geografis di mana objek ini berada.</p>
+                </div>
+
+                <!-- Target Audiens Utama -->
+                <div>
+                    <label for="target_audiens" class="block text-secondary text-lg font-medium mb-2">Target Audiens Utama (Opsional)</label>
+                    <input type="text" id="target_audiens" value="" placeholder="Contoh: Wisatawan Keluarga, Pecinta Sejarah, Penggemar Kopi"
+                           class="w-full p-3 border border-mediumgray rounded-lg focus:ring-primary focus:border-primary transition duration-200 shadow-sm">
+                    <p class="text-sm text-darkgray mt-2">Siapa target utama pesan promosi ini? (Misal: anak muda, keluarga, turis asing).</p>
+                </div>
+            </div>
+
+            <!-- Deskripsi Singkat / Poin-poin Kunci / Fakta Sejarah -->
+            <div class="mb-8">
+                <label for="deskripsi_kunci" class="block text-secondary text-lg font-medium mb-2">Deskripsi Singkat / Poin-poin Kunci / Fakta Sejarah <span class="text-red-500">*</span></label>
+                <textarea id="deskripsi_kunci" rows="7" placeholder="Sebutkan detail penting, fragmen cerita, lokasi, tradisi, keunikan, atau fakta sejarah obyek ini. Semakin detail dan spesifik, semakin baik hasil yang akan AI berikan!"
+                          class="w-full p-3 border border-mediumgray rounded-lg focus:ring-primary focus:border-primary transition duration-200 shadow-sm"></textarea>
+                <p class="text-sm text-darkgray mt-2">Ini adalah informasi inti untuk AI merangkai cerita. Beri detail sebanyak mungkin!</p>
+            </div>
+
+            <div class="text-center">
+                <button id="generateBtn"
+                        class="bg-accent text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-orange-600 transition duration-300 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-75 uppercase tracking-wide text-lg">
+                    Mulai Rangkai Kisah & Optimalkan Promosi! ✨
+                </button>
+            </div>
+        </section>
+
+        <!-- Loading Indicator -->
+        <div id="loadingIndicator" class="hidden text-center mt-10">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-4 border-primary mx-auto"></div>
+            <p class="text-primary mt-4 text-lg">AI sedang bekerja keras merangkai cerita dan wawasan untuk Anda...</p>
+        </div>
+
+        <!-- Error Message -->
+        <div id="errorMessage" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md relative mt-10" role="alert">
+            <strong class="font-bold">Terjadi Kesalahan!</strong>
+            <span class="block sm:inline" id="errorText"></span>
+        </div>
+
+        <!-- Output Section - Narasi -->
+        <section id="narrationOutputSection" class="hidden mt-12">
+            <h2 class="text-3xl font-bold text-secondary text-center mb-6">📝 Kisah & Narasi dari Gemini AI</h2>
+            <div id="narrationContent" class="bg-white rounded-lg p-6 shadow-md border border-gray-200 leading-relaxed text-gray-800">
+                <!-- Narration will be inserted here by JavaScript -->
+            </div>
+            <div class="text-center mt-6">
+                <button id="downloadNarrationBtn"
+                        class="bg-blue-500 text-white font-bold py-2 px-6 rounded-full shadow-md hover:bg-blue-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 text-base">
+                    Unduh Naskah Cerita (PDF) ⬇️
+                </button>
+            </div>
+        </section>
+
+        <!-- Output Section - Analisis -->
+        <section id="analysisOutputSection" class="hidden mt-12">
+            <h2 class="text-3xl font-bold text-secondary text-center mb-6">💡 Wawasan & Optimasi Promosi dari Gemini AI</h2>
+            <div class="text-center mb-6">
+                <button id="downloadAnalysisBtn"
+                        class="bg-blue-500 text-white font-bold py-2 px-6 rounded-full shadow-md hover:bg-blue-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 text-base">
+                    Unduh Analisis Promosi (PDF) ⬇️
+                </button>
+            </div>
+            <div id="analysisContent" class="grid md:grid-cols-2 gap-6">
+                <!-- Analysis will be inserted here by JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-secondary p-4 text-center text-lightgray text-sm mt-10">
+        &copy; <span id="currentYear"></span> Nusantara Story AI. Dibuat dengan oleh Kholish Fauzan ✨.
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
