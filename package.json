@@ -1,0 +1,22 @@
+{
+  "name": "nusantara-story-ai-web",
+  "version": "1.0.0",
+  "description": "Nusantara Story AI web application with Netlify Functions.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "netlify",
+    "gemini",
+    "ai",
+    "javascript",
+    "html",
+    "css"
+  ],
+  "author": "Kholish Fauzan",
+  "license": "ISC",
+  "dependencies": {
+    "@google/generative-ai": "^0.14.0"
+  }
+}
