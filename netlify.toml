@@ -2,4 +2,4 @@
 [functions]
   directory = "functions"
   node_bundler = "esbuild"
-  timeout = 26
+  timeout = 26000
