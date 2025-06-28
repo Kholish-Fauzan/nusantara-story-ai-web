@@ -3,9 +3,4 @@
 [functions]
   directory = "functions"
   node_bundler = "esbuild"
-  # Hapus baris 'timeout = 26000' di sini jika ada
-
-# Tambahkan blok ini di bawah untuk mengkonfigurasi fungsi 'generate' secara spesifik
-[[functions]]
-  function = "generate" # Nama file fungsi Anda tanpa ekstensi .js
-  timeout = 26000       # Timeout untuk fungsi 'generate' ini dalam milidetik
+  timeout = 26000 
