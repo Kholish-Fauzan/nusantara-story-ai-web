@@ -1,0 +1,4 @@
+# netlify.toml
+[functions]
+  directory = "functions"
+  node_bundler = "esbuild" # Direkomendasikan untuk performa yang lebih baik

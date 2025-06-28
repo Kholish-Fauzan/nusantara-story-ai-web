@@ -1,5 +1,5 @@
 // script.js
-const GEMINI_API_KEY = "YOUR_GEMINI_API_KEY";
+// Frontend JavaScript - Memanggil Netlify Function untuk interaksi Gemini API
 
 // DOM Elements
 const judulObjekInput = document.getElementById('judul_objek');
@@ -35,190 +35,24 @@ function hideError() {
     errorMessageDiv.classList.add('hidden');
 }
 
-// Fungsi untuk memanggil Gemini API untuk narasi
-async function callGeminiAPIForNarration(judul, lokasi, deskripsi, target, gaya) {
-    const prompt = `
-    Anda adalah seorang ahli narasi budaya dan pariwisata Indonesia. Buatlah narasi yang memukau dan informatif tentang objek budaya/pariwisata berikut:
-
-    Nama Objek: ${judul}
-    Lokasi: ${lokasi}
-    Deskripsi Kunci/Fakta Sejarah: ${deskripsi}
-
-    Target Audiens (jika ada): ${target || 'Umum'}
-    Gaya Bahasa (jika dipilih): ${gaya !== 'Pilih Gaya' ? gaya : 'Informatif dan Menarik'}
-
-    Fokuskan pada:
-    1. Keunikan dan daya tarik utama objek tersebut.
-    2. Sejarah atau latar belakang budaya yang relevan (jika ada dalam deskripsi kunci).
-    3. Potensi pengalaman bagi pengunjung/pembaca.
-    4. Gunakan bahasa yang kaya dan deskriptif.
-    5. Panjang narasi sekitar 400-600 kata.
-
-    Pastikan narasi tersebut otentik dan menggugah minat.
-    `;
-
+// Fungsi untuk memanggil Netlify Function
+async function callNetlifyFunction(type, data) {
     try {
-        const payload = {
-            contents: [{ role: "user", parts: [{ text: prompt }] }],
-        };
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
-
-        const response = await fetch(apiUrl, {
+        const response = await fetch('/.netlify/functions/generate', { // Endpoint Netlify Function
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
+            body: JSON.stringify({ type, data }) // Kirim tipe permintaan dan data
         });
 
         if (!response.ok) {
             const errorData = await response.json();
-            throw new Error(`API Error: ${response.status} - ${errorData.error.message || 'Unknown error'}`);
+            throw new Error(`Server Error: ${response.status} - ${errorData.message || 'Unknown error'}`);
         }
 
-        const result = await response.json();
-        if (result.candidates && result.candidates.length > 0 &&
-            result.candidates[0].content && result.candidates[0].content.parts &&
-            result.candidates[0].content.parts.length > 0) {
-            return result.candidates[0].content.parts[0].text;
-        } else {
-            throw new Error("Respons narasi dari AI tidak valid atau kosong.");
-        }
+        return await response.json(); // Mengembalikan respons dari fungsi Netlify
     } catch (error) {
-        console.error("Error generating narration:", error);
-        showError(`Gagal merangkai narasi: ${error.message}.`);
-        return null;
-    }
-}
-
-// Fungsi untuk memanggil Gemini API untuk analisis
-async function callGeminiAPIForAnalysis(lokasi, narrative) {
-    const prompt = `
-    Berdasarkan narasi tentang objek budaya/pariwisata dari ${lokasi} ini, berikan analisis mendalam yang berfokus pada potensi promosi dan pengembangan ekonomi lokal.
-
-    Narasi:
-    ${narrative}
-
-    Berikan output dalam format JSON yang terstruktur dengan kunci-kunci berikut. Untuk setiap kunci, berikan minimal 3 poin (jika relevan).
-
-    {
-      "Poin Jual Utama": [
-        {"poin": "Poin utama 1", "deskripsi": "Deskripsi poin 1"},
-        {"poin": "Poin utama 2", "deskripsi": "Deskripsi poin 2"}
-      ],
-      "Segmen Wisatawan Ideal": [
-        {"poin": "Segmen 1", "deskripsi": "Deskripsi segmen 1"},
-        {"poin": "Segmen 2", "deskripsi": "Deskripsi segmen 2"}
-      ],
-      "Ide Monetisasi & Produk Pariwisata": [
-        {"poin": "Ide 1", "deskripsi": "Deskripsi ide 1"},
-        {"poin": "Ide 2", "deskripsi": "Deskripsi ide 2"}
-      ],
-      "Saran Peningkatan Pesan Promosi": [
-        {"poin": "Saran 1", "deskripsi": "Deskripsi saran 1"},
-        {"poin": "Saran 2", "deskripsi": "Deskripsi saran 2"}
-      ],
-      "Potensi Kolaborasi Lokal": [
-        {"poin": "Kolaborasi 1", "deskripsi": "Deskripsi kolaborasi 1"},
-        {"poin": "Kolaborasi 2", "deskripsi": "Deskripsi kolaborasi 2"}
-      ]
-    }
-
-    Pastikan output adalah JSON yang valid dan dapat di-parse langsung.
-    `;
-
-    try {
-        const payload = {
-            contents: [{ role: "user", parts: [{ text: prompt }] }],
-            generationConfig: {
-                responseMimeType: "application/json",
-                responseSchema: {
-                    type: "OBJECT", // Changed to OBJECT to match the top-level JSON structure
-                    properties: {
-                        "Poin Jual Utama": {
-                            type: "ARRAY",
-                            items: {
-                                type: "OBJECT",
-                                properties: {
-                                    "poin": { "type": "STRING" },
-                                    "deskripsi": { "type": "STRING" }
-                                }
-                            }
-                        },
-                        "Segmen Wisatawan Ideal": {
-                            type: "ARRAY",
-                            items: {
-                                type: "OBJECT",
-                                properties: {
-                                    "poin": { "type": "STRING" },
-                                    "deskripsi": { "type": "STRING" }
-                                }
-                            }
-                        },
-                        "Ide Monetisasi & Produk Pariwisata": {
-                            type: "ARRAY",
-                            items: {
-                                type: "OBJECT",
-                                properties: {
-                                    "poin": { "type": "STRING" },
-                                    "deskripsi": { "type": "STRING" }
-                                }
-                            }
-                        },
-                        "Saran Peningkatan Pesan Promosi": {
-                            type: "ARRAY",
-                            items: {
-                                type: "OBJECT",
-                                properties: {
-                                    "poin": { "type": "STRING" },
-                                    "deskripsi": { "type": "STRING" }
-                                }
-                            }
-                        },
-                        "Potensi Kolaborasi Lokal": {
-                            type: "ARRAY",
-                            items: {
-                                type: "OBJECT",
-                                properties: {
-                                    "poin": { "type": "STRING" },
-                                    "deskripsi": { "type": "STRING" }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        };
-
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
-
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(`API Error: ${response.status} - ${errorData.error.message || 'Unknown error'}`);
-        }
-
-        const result = await response.json();
-        if (result.candidates && result.candidates.length > 0 &&
-            result.candidates[0].content && result.candidates[0].content.parts &&
-            result.candidates[0].content.parts.length > 0) {
-            const jsonString = result.candidates[0].content.parts[0].text;
-            try {
-                // Gemini API might return JSON wrapped in markdown, so remove it
-                const cleanedJsonString = jsonString.replace(/```json\n|\n```/g, '').trim();
-                return JSON.parse(cleanedJsonString);
-            } catch (jsonError) {
-                throw new Error(`Gagal mengurai JSON dari respons AI: ${jsonError.message}. Respons mentah: ${jsonString}`);
-            }
-        } else {
-            throw new Error("Respons analisis dari AI tidak valid atau kosong.");
-        }
-    } catch (error) {
-        console.error("Error generating analysis:", error);
-        showError(`Gagal menganalisis data: ${error.message}.`);
+        console.error("Error calling Netlify Function:", error);
+        showError(`Gagal memproses permintaan: ${error.message}.`);
         return null;
     }
 }
@@ -301,28 +135,32 @@ generateBtn.addEventListener('click', async () => {
 
     if (!judul || !lokasi || !deskripsi) {
         showError("Mohon lengkapi semua kolom yang bertanda '*' (Wajib diisi) sebelum melanjutkan! 🙏");
+        loadingIndicator.classList.add('hidden'); // Hide loading if validation fails
         return;
     }
 
     let generatedNarration = null;
     let analysisResult = null;
 
-    // Generate Narration
-    generatedNarration = await callGeminiAPIForNarration(judul, lokasi, deskripsi, target, gaya);
-    if (!generatedNarration) {
+    // Call Netlify Function for Narration
+    const narrationResponse = await callNetlifyFunction("narration", { judul, lokasi, deskripsi, target, gaya });
+    if (!narrationResponse || narrationResponse.type !== "narration") {
+        showError(narrationResponse.content || "Gagal mendapatkan narasi dari AI."); // Use content for specific error if available
         return; // Stop if narration failed
     }
+    generatedNarration = narrationResponse.content;
     narrationContentDiv.innerHTML = generatedNarration.replace(/\n/g, '<br/>'); // Preserve line breaks
     narrationOutputSection.classList.remove('hidden');
 
-    // Generate Analysis
-    analysisResult = await callGeminiAPIForAnalysis(lokasi, generatedNarration);
-    if (!analysisResult) {
+    // Call Netlify Function for Analysis
+    const analysisResponse = await callNetlifyFunction("analysis", { lokasi, narrative: generatedNarration });
+    if (!analysisResponse || analysisResponse.type !== "analysis") {
+        showError(analysisResponse.content || "Gagal mendapatkan analisis dari AI."); // Use content for specific error if available
         return; // Stop if analysis failed
     }
+    analysisResult = analysisResponse.content;
     renderAnalysis(analysisResult);
     analysisOutputSection.classList.remove('hidden');
-
 
     loadingIndicator.classList.add('hidden');
 
