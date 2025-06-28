@@ -1,5 +1,4 @@
 // functions/generate.js
-// Ini adalah Netlify Function yang akan berjalan di sisi server
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 

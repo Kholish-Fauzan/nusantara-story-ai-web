@@ -1,6 +1,6 @@
-# netlify.toml
-
 [functions]
   directory = "functions"
   node_bundler = "esbuild"
-  timeout = 26000 
+
+[functions.generate]
+  timeout = 26
